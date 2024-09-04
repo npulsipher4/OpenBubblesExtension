@@ -29,6 +29,15 @@
             <meta-data
                 android:name="madrid_icon"
                 android:resource="@drawable/madrid_icon" />
+            <meta-data
+                android:name="madrid_id"
+                android:value="1124197642" />
+            <meta-data
+                android:name="madrid_name"
+                android:value="GamePigeon" />
+            <meta-data
+                android:name="madrid_bundle_id"
+                android:value="com.apple.messages.MSMessageExtensionBalloonPlugin:EWFNLB79LQ:com.gamerdelights.gamepigeon.ext" />
         </service>
     </application>
 
