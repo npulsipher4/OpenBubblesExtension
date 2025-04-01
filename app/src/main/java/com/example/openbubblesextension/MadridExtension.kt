@@ -1,12 +1,9 @@
 package com.example.openbubblesextension
 
-import android.R.id
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.provider.SyncStateContract.Constants
-import android.util.Base64
 import android.util.Log
 import android.widget.RemoteViews
 import com.bluebubbles.messaging.IKeyboardHandle
@@ -35,15 +32,22 @@ class MadridExtension(private val context: Context) : IMadridExtension.Stub() {
 
         currentKeyboardHandle = handle
 
-        val intentWithData = Intent(
+        val wordHuntIntentWithData = Intent(
+            context,
+            KeyboardClickReceiver::class.java
+        )
+        val basketballIntentWithData = Intent(
             context,
             KeyboardClickReceiver::class.java
         )
 
-        val pendingIntent = PendingIntent.getBroadcast(context, 7, intentWithData,
+        val wordHuntPendingIntent = PendingIntent.getBroadcast(context, 7, wordHuntIntentWithData,
+            PendingIntent.FLAG_IMMUTABLE)
+        val basketballPendingIntent = PendingIntent.getBroadcast(context, 7, wordHuntIntentWithData,
             PendingIntent.FLAG_IMMUTABLE)
 
-        view.setOnClickPendingIntent(R.id.button, pendingIntent)
+        view.setOnClickPendingIntent(R.id.wordHuntButton, wordHuntPendingIntent)
+        view.setOnClickPendingIntent(R.id.basketballButton, wordHuntPendingIntent)
 
         return view
     }
@@ -78,7 +82,13 @@ class MadridExtension(private val context: Context) : IMadridExtension.Stub() {
     }
 
     override fun messageUpdated(message: MadridMessage?) {
-        Log.i("update", "message");
+        val url = message?.url
+        val session = message?.session
+        val ldText = message?.ldText
+        val isLive = message?.isLive
+        val gamePigeon = url?.let { GamePigeon(it) }
+        gamePigeon?.data()?.let { Log.i("Message JSON", it.toString(4)) }
+        Log.i("update", "message")
     }
 
 }

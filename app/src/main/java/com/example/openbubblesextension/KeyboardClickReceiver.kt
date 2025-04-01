@@ -16,6 +16,7 @@ class KeyboardClickReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         // This method is called when the BroadcastReceiver is receiving an Intent broadcast.
 
+        val cryption: Cryption = Cryption()
         val bm = BitmapFactory.decodeResource(context.resources, R.drawable.my_image)
         val baos = ByteArrayOutputStream()
         bm.compress(Bitmap.CompressFormat.JPEG, 70, baos)
@@ -25,12 +26,12 @@ class KeyboardClickReceiver : BroadcastReceiver() {
 
         val message = MadridMessage().apply {
             messageGuid = UUID.randomUUID().toString()
-            ldText = "Basketball"
-            url = "data:asdjfladsjf"
+            ldText = "Word Hunt"
+            url = cryption.encryptUrl("slkajsdfljaldskjflkaj")
             session = UUID.randomUUID().toString()
 
             imageBase64 = imageEncoded
-            caption = "Play basketball"
+            caption = "Let's Play Word Hunt!"
 
             isLive = true
         }
